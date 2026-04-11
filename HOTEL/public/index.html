@@ -2663,6 +2663,283 @@
                                                 <div class="text-2xl font-bold text-purple-600">¥{{ toFixedSafe(ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0) / Math.max(1, ctripHotelsList.reduce((sum, h) => sum + (h.quantity || 0), 0)), 2) }}</div>
                                                 <div class="text-xs text-gray-500">平均房价(ADR)</div>
                                             </div>
+                                            <div :style="(function() {
+                                                const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                if (totalSales === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                    const share = (h.amount || 0) / totalSales;
+                                                    return sum + share * share;
+                                                }, 0) * 10000;
+                                                if (hhiVal < 500) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                else if (hhiVal <= 800) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                            })()" class="rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-orange-600">{{
+                                                    (() => {
+                                                        const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                        if (totalSales === 0) return {val:'0.00', level:'--'};
+                                                        const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                            const share = (h.amount || 0) / totalSales;
+                                                            return sum + (share * share);
+                                                        }, 0) * 10000;
+                                                        let level = '';
+                                                        if (hhiVal < 500) level = '低度内卷';
+                                                        else if (hhiVal <= 800) level = '中度内卷';
+                                                        else level = '寡头市场';
+                                                        return {val: toFixedSafe(hhiVal, 2), level: level};
+                                                    })().val }}</div>
+                                                <div class="text-xs text-gray-500">收益集中度</div>
+                                                <div class="text-sm font-bold {{
+                                                    (() => {
+                                                        const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                        if (totalSales === 0) return 'text-gray-600';
+                                                        const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                            const share = (h.amount || 0) / totalSales;
+                                                            return sum + (share * share);
+                                                        }, 0) * 10000;
+                                                        if (hhiVal < 500) return 'text-yellow-600';
+                                                        else if (hhiVal <= 800) return 'text-orange-600';
+                                                        else return 'text-red-600';
+                                                    })()
+                                                }}">{{
+                                                    (() => {
+                                                        const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                        if (totalSales === 0) return '';
+                                                        const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                            const share = (h.amount || 0) / totalSales;
+                                                            return sum + (share * share);
+                                                        }, 0) * 10000;
+                                                        if (hhiVal < 500) return '低度内卷';
+                                                        else if (hhiVal <= 800) return '中度内卷';
+                                                        else return '寡头市场';
+                                                    })()
+                                                }}</div>
+                                            </div>
+                                            <div :style="(function() {
+                                                const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                if (totalVisitors === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                    const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                    return sum + share * share;
+                                                }, 0) * 10000;
+                                                if (hhiVal < 400) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                else if (hhiVal <= 700) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                            })()" class="rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-orange-600">{{
+                                                    (() => {
+                                                        const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                        if (totalVisitors === 0) return {val:'0.00', level:'--'};
+                                                        const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                            const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                            return sum + (share * share);
+                                                        }, 0) * 10000;
+                                                        let level = '';
+                                                        if (hhiVal < 400) level = '低度内卷';
+                                                        else if (hhiVal <= 700) level = '中度内卷';
+                                                        else level = '高度内卷';
+                                                        return {val: toFixedSafe(hhiVal, 2), level: level};
+                                                    })().val }}</div>
+                                                <div class="text-xs text-gray-500">流量集中度</div>
+                                                <div class="text-sm font-bold {{
+                                                    (() => {
+                                                        const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                        if (totalVisitors === 0) return '';
+                                                        const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                            const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                            return sum + share * share;
+                                                        }, 0) * 10000;
+                                                        if (hhiVal < 400) return 'text-yellow-600';
+                                                        else if (hhiVal <= 700) return 'text-orange-600';
+                                                        else return 'text-red-600';
+                                                    })()
+                                                }}">{{
+                                                    (() => {
+                                                        const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                        if (totalVisitors === 0) return '';
+                                                        const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                            const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                            return sum + (share * share);
+                                                        }, 0) * 10000;
+                                                        if (hhiVal < 400) return '低度内卷';
+                                                        else if (hhiVal <= 700) return '中度内卷';
+                                                        else return '高度内卷';
+                                                    })()
+                                                }}</div>
+                                            </div>
+                                            <div :style="(function() {
+                                                const hotels = ctripHotelsList;
+                                                if (!hotels || hotels.length < 2) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                const priceRealizationRates = [];
+                                                for (const h of hotels) {
+                                                    const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                    if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                }
+                                                if (priceRealizationRates.length < 2) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                if (sigma < 3) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                else if (sigma <= 8) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                else if (sigma <= 15) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                            })()" class="rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-orange-600">{{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList;
+                                                        if (!hotels || hotels.length < 2) return {val:'-', level:'--'};
+                                                        const priceRealizationRates = [];
+                                                        for (const h of hotels) {
+                                                            const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                            if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                        }
+                                                        if (priceRealizationRates.length < 2) return {val:'-', level:'--'};
+                                                        const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                        const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                        const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                        let level = '';
+                                                        if (sigma < 3) level = '健康';
+                                                        else if (sigma <= 8) level = '良好';
+                                                        else if (sigma <= 15) level = '激烈';
+                                                        else level = '恶化';
+                                                        return {val: toFixedSafe(sigma, 2) + '%', level: level};
+                                                    })().val }}</div>
+                                                <div class="text-xs text-gray-500">竞争健康度</div>
+                                                <div class="text-sm font-bold {{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList;
+                                                        if (!hotels || hotels.length < 2) return 'text-gray-500';
+                                                        const priceRealizationRates = [];
+                                                        for (const h of hotels) {
+                                                            const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                            if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                        }
+                                                        if (priceRealizationRates.length < 2) return 'text-gray-500';
+                                                        const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                        const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                        const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                        if (sigma < 3) return 'text-green-600';
+                                                        else if (sigma <= 8) return 'text-emerald-600';
+                                                        else if (sigma <= 15) return 'text-orange-600';
+                                                        else if (sigma <= 25) return 'text-red-600';
+                                                        else return 'text-red-700';
+                                                    })()
+                                                }}">{{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList;
+                                                        if (!hotels || hotels.length < 2) return '数据不足';
+                                                        const priceRealizationRates = [];
+                                                        for (const h of hotels) {
+                                                            const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                            if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                        }
+                                                        if (priceRealizationRates.length < 2) return '数据不足';
+                                                        const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                        const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                        const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                        if (sigma < 3) return '健康';
+                                                        else if (sigma <= 8) return '良好';
+                                                        else if (sigma <= 15) return '激烈';
+                                                        else return '恶化';
+                                                    })()
+                                                }}</div>
+                                            </div>
+                                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-yellow-600">{{ ctripHotelsList.reduce((sum, h) => sum + (h.totalOrderNum || 0), 0) }}</div>
+                                                <div class="text-xs text-gray-500">全渠道AI预计总间夜数</div>
+                                            </div>
+                                            <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-indigo-600">{{ formatNumber(ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0)) }}</div>
+                                                <div class="text-xs text-gray-500">携程APP总访客量</div>
+                                            </div>
+                                            <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-teal-600">{{ formatNumber(ctripHotelsList.reduce((sum, h) => sum + (h.qunarDetailVisitors || 0), 0)) }}</div>
+                                                <div class="text-xs text-gray-500">去哪儿总访客量</div>
+                                            </div>
+                                            <div :style="(function() {
+                                                const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                if (hotels.length === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                if (avgR <= 80) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                else if (avgR <= 150) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                else if (avgR <= 220) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                            })()" class="rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-orange-600">{{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                        if (hotels.length === 0) return '-';
+                                                        const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                        return toFixedSafe(avgR, 1);
+                                                    })()
+                                                }}</div>
+                                                <div class="text-xs text-gray-500">携程点评分-转化率影响因子(R)</div>
+                                                <div class="text-sm font-bold {{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                        if (hotels.length === 0) return 'text-gray-500';
+                                                        const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                        if (avgR <= 80) return 'text-green-600';
+                                                        else if (avgR <= 150) return 'text-emerald-600';
+                                                        else if (avgR <= 220) return 'text-orange-600';
+                                                        else return 'text-red-600';
+                                                    })()
+                                                }}">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                            if (hotels.length === 0) return '数据不足';
+                                                        const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                        if (avgR <= 80) return '高效拉动';
+                                                        else if (avgR <= 150) return '正常效率';
+                                                        else if (avgR <= 220) return '效率偏低';
+                                                        else return '需优化';
+                                                    })()
+                                                }}</div>
+                                            </div>
+                                            <div :style="(function() {
+                                                const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                if (hotels.length === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                if (avgR <= 80) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                else if (avgR <= 150) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                else if (avgR <= 220) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                            })()" class="rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-orange-600">{{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                        if (hotels.length === 0) return '-';
+                                                        const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                        return toFixedSafe(avgR, 1);
+                                                    })()
+                                                }}</div>
+                                                <div class="text-xs text-gray-500">去哪点评分-转化率影响因子(R)</div>
+                                                <div class="text-sm font-bold {{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                        if (hotels.length === 0) return 'text-gray-500';
+                                                        const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                        if (avgR <= 80) return 'text-green-600';
+                                                        else if (avgR <= 150) return 'text-emerald-600';
+                                                        else if (avgR <= 220) return 'text-orange-600';
+                                                        else return 'text-red-600';
+                                                    })()
+                                                }}">{{
+                                                    (() => {
+                                                        const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                        if (hotels.length === 0) return '数据不足';
+                                                        const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                        if (avgR <= 80) return '高效拉动';
+                                                        else if (avgR <= 150) return '正常效率';
+                                                        else if (avgR <= 220) return '效率偏低';
+                                                        else return '需优化';
+                                                    })()
+                                                }}</div>
+                                            </div>
+                                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
+                                                <div class="text-2xl font-bold text-blue-600">¥{{ toFixedSafe(ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0) / Math.max(1, ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0) + ctripHotelsList.reduce((sum, h) => sum + (h.qunarDetailVisitors || 0), 0)), 2) }}</div>
+                                                <div class="text-xs text-gray-500">流量价值效率</div>
+                                            </div>
                                         </div>
 
                                         <!-- Tab切换 -->
@@ -2941,31 +3218,446 @@
                                                     <div class="text-2xl font-bold text-purple-600">¥{{ toFixedSafe(ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0) / Math.max(1, ctripHotelsList.reduce((sum, h) => sum + (h.quantity || 0), 0)), 2) }}</div>
                                                     <div class="text-xs text-gray-500">平均房价(ADR)</div>
                                                 </div>
-                                                <div class="bg-purple-50 border border-purple-200 rounded-lg p-3 text-center">
-                                                    <div class="text-2xl font-bold text-purple-600">{{
+                                                <div :style="(function() {
+                                                    const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                    if (totalSales === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                        const share = (h.amount || 0) / totalSales;
+                                                        return sum + share * share;
+                                                    }, 0) * 10000;
+                                                    if (hhiVal < 500) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (hhiVal <= 800) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
                                                         (() => {
-                                                            // 获取当前榜单中的酒店名称列表
-                                                            const hotelNames = ctripHotelsList.map(h => h.hotelName).filter(Boolean);
-                                                            if (hotelNames.length === 0) return '0.00%';
-                                                            // 从 onlineDataList 中找到这些酒店的流量数据
-                                                            const ctripData = onlineDataList.filter(i => i.source === 'ctrip' && i.exposure_count > 0 && hotelNames.some(name => i.hotel_name && i.hotel_name.includes(name)));
-                                                            if (ctripData.length === 0) return '0.00%';
-                                                            const avgRate = ctripData.reduce((sum, i) => sum + (safeDivide(i.click_count, i.exposure_count) * 100 || 0), 0) / ctripData.length;
-                                                            return toFixedSafe(avgRate, 2) + '%';
+                                                            const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                            if (totalSales === 0) return {val:'0.00', level:'--'};
+                                                            const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                                const share = (h.amount || 0) / totalSales;
+                                                                return sum + (share * share);
+                                                            }, 0) * 10000;
+                                                            let level = '';
+                                                            if (hhiVal < 500) level = '低度内卷';
+                                                            else if (hhiVal <= 800) level = '中度内卷';
+                                                            else level = '寡头市场';
+                                                            return {val: toFixedSafe(hhiVal, 2), level: level};
+                                                        })().val }}</div>
+                                                    <div class="text-xs text-gray-500">收益集中度</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                            if (totalSales === 0) return 'text-gray-600';
+                                                            const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                                const share = (h.amount || 0) / totalSales;
+                                                                return sum + (share * share);
+                                                            }, 0) * 10000;
+                                                            if (hhiVal < 500) return 'text-yellow-600';
+                                                            else if (hhiVal <= 800) return 'text-orange-600';
+                                                            else return 'text-red-600';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const totalSales = ctripHotelsList.reduce((sum, h) => sum + (h.amount || 0), 0);
+                                                            if (totalSales === 0) return '';
+                                                            const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                                const share = (h.amount || 0) / totalSales;
+                                                                return sum + (share * share);
+                                                            }, 0) * 10000;
+                                                            if (hhiVal < 500) return '低度内卷';
+                                                            else if (hhiVal <= 800) return '中度内卷';
+                                                            else return '寡头市场';
                                                         })()
                                                     }}</div>
-                                                    <div class="text-xs text-gray-500">平均浏览转化率</div>
+                                                </div>
+                                                <div :style="(function() {
+                                                    const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                    if (totalVisitors === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                        const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                        return sum + share * share;
+                                                    }, 0) * 10000;
+                                                    if (hhiVal < 400) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (hhiVal <= 700) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
+                                                        (() => {
+                                                            const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                            if (totalVisitors === 0) return {val:'0.00', level:'--'};
+                                                            const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                                const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                                return sum + (share * share);
+                                                            }, 0) * 10000;
+                                                            let level = '';
+                                                            if (hhiVal < 400) level = '低度内卷';
+                                                            else if (hhiVal <= 700) level = '中度内卷';
+                                                            else level = '高度内卷';
+                                                            return {val: toFixedSafe(hhiVal, 2), level: level};
+                                                        })().val }}</div>
+                                                    <div class="text-xs text-gray-500">流量集中度</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                            if (totalVisitors === 0) return '';
+                                                            const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                                const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                                return sum + share * share;
+                                                            }, 0) * 10000;
+                                                            if (hhiVal < 400) return 'text-yellow-600';
+                                                            else if (hhiVal <= 700) return 'text-orange-600';
+                                                            else return 'text-red-600';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const totalVisitors = ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0);
+                                                            if (totalVisitors === 0) return '';
+                                                            const hhiVal = ctripHotelsList.reduce((sum, h) => {
+                                                                const share = (h.totalDetailNum || 0) / totalVisitors;
+                                                                return sum + (share * share);
+                                                            }, 0) * 10000;
+                                                            if (hhiVal < 400) return '低度内卷';
+                                                            else if (hhiVal <= 700) return '中度内卷';
+                                                            else return '高度内卷';
+                                                        })()
+                                                    }}</div>
+                                                </div>
+                                                <div :style="(function() {
+                                                    const hotels = ctripHotelsList;
+                                                    if (!hotels || hotels.length < 2) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    const priceRealizationRates = [];
+                                                    for (const h of hotels) {
+                                                        const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                        if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                    }
+                                                    if (priceRealizationRates.length < 2) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                    const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                    const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                    if (sigma < 3) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                    else if (sigma <= 8) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (sigma <= 15) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList;
+                                                            if (!hotels || hotels.length < 2) return {val:'-', level:'--'};
+                                                            const priceRealizationRates = [];
+                                                            for (const h of hotels) {
+                                                                const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                                if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                            }
+                                                            if (priceRealizationRates.length < 2) return {val:'-', level:'--'};
+                                                            const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                            const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                            const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                            let level = '';
+                                                            if (sigma < 3) level = '健康';
+                                                            else if (sigma <= 8) level = '良好';
+                                                            else if (sigma <= 15) level = '激烈';
+                                                            else level = '恶化';
+                                                            return {val: toFixedSafe(sigma, 2) + '%', level: level};
+                                                        })().val }}</div>
+                                                    <div class="text-xs text-gray-500">竞争健康度</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList;
+                                                            if (!hotels || hotels.length < 2) return 'text-gray-500';
+                                                            const priceRealizationRates = [];
+                                                            for (const h of hotels) {
+                                                                const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                                if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                            }
+                                                            if (priceRealizationRates.length < 2) return 'text-gray-500';
+                                                            const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                            const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                            const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                            if (sigma < 3) return 'text-green-600';
+                                                            else if (sigma <= 8) return 'text-emerald-600';
+                                                            else if (sigma <= 15) return 'text-orange-600';
+                                                            else if (sigma <= 25) return 'text-red-600';
+                                                            else return 'text-red-700';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList;
+                                                            if (!hotels || hotels.length < 2) return '数据不足';
+                                                            const priceRealizationRates = [];
+                                                            for (const h of hotels) {
+                                                                const avgSalesPrice = h.quantity > 0 ? (h.amount || 0) / h.quantity : 0;
+                                                                if (avgSalesPrice > 0) priceRealizationRates.push(avgSalesPrice);
+                                                            }
+                                                            if (priceRealizationRates.length < 2) return '数据不足';
+                                                            const avgRate = priceRealizationRates.reduce((sum, r) => sum + r, 0) / priceRealizationRates.length;
+                                                            const variance = priceRealizationRates.reduce((sum, r) => sum + Math.pow(r - avgRate, 2), 0) / priceRealizationRates.length;
+                                                            const sigma = Math.sqrt(variance) / Math.max(avgRate, 1) * 100;
+                                                            if (sigma < 3) return '健康';
+                                                            else if (sigma <= 8) return '良好';
+                                                            else if (sigma <= 15) return '激烈';
+                                                            else return '恶化';
+                                                        })()
+                                                    }}</div>
+                                                </div>
+                                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-yellow-600">{{ ctripHotelsList.reduce((sum, h) => sum + (h.totalOrderNum || 0), 0) }}</div>
+                                                    <div class="text-xs text-gray-500">全渠道AI预计总间夜数</div>
+                                                </div>
+                                                <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-indigo-600">{{ formatNumber(ctripHotelsList.reduce((sum, h) => sum + (h.totalDetailNum || 0), 0)) }}</div>
+                                                    <div class="text-xs text-gray-500">携程APP总访客量</div>
+                                                </div>
+                                                <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-teal-600">{{ formatNumber(ctripHotelsList.reduce((sum, h) => sum + (h.qunarDetailVisitors || 0), 0)) }}</div>
+                                                    <div class="text-xs text-gray-500">去哪儿总访客量</div>
+                                                </div>
+                                                <div :style="(function() {
+                                                    const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                    if (hotels.length === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                    if (avgR <= 80) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                    else if (avgR <= 150) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (avgR <= 220) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                            if (hotels.length === 0) return '-';
+                                                            const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                            return toFixedSafe(avgR, 1);
+                                                        })()
+                                                    }}</div>
+                                                    <div class="text-xs text-gray-500">携程点评分-转化率影响因子(R)</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                            if (hotels.length === 0) return 'text-gray-500';
+                                                            const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                            if (avgR <= 80) return 'text-green-600';
+                                                            else if (avgR <= 150) return 'text-emerald-600';
+                                                            else if (avgR <= 220) return 'text-orange-600';
+                                                            else return 'text-red-600';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) > 0 && (h.convertionRate || 0) > 0);
+                                                            if (hotels.length === 0) return '数据不足';
+                                                            const avgR = hotels.reduce((sum, h) => sum + (h.commentScore / Math.max(h.convertionRate, 0.01) * 100), 0) / hotels.length;
+                                                            if (avgR <= 80) return '高效拉动';
+                                                            else if (avgR <= 150) return '正常效率';
+                                                            else if (avgR <= 220) return '效率偏低';
+                                                            else return '需优化';
+                                                        })()
+                                                    }}</div>
+                                                </div>
+                                                <div :style="(function() {
+                                                    const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                    if (hotels.length === 0) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                    if (avgR <= 80) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                    else if (avgR <= 150) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (avgR <= 220) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                            if (hotels.length === 0) return '-';
+                                                            const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                            return toFixedSafe(avgR, 1);
+                                                        })()
+                                                    }}</div>
+                                                    <div class="text-xs text-gray-500">去哪点评分-转化率影响因子(R)</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                            if (hotels.length === 0) return 'text-gray-500';
+                                                            const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                            if (avgR <= 80) return 'text-green-600';
+                                                            else if (avgR <= 150) return 'text-emerald-600';
+                                                            else if (avgR <= 220) return 'text-orange-600';
+                                                            else return 'text-red-600';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) > 0 && (h.qunarDetailCR || 0) > 0);
+                                                            if (hotels.length === 0) return '数据不足';
+                                                            const avgR = hotels.reduce((sum, h) => sum + (h.qunarCommentScore / Math.max(h.qunarDetailCR, 0.01) * 100), 0) / hotels.length;
+                                                            if (avgR <= 80) return '高效拉动';
+                                                            else if (avgR <= 150) return '正常效率';
+                                                            else if (avgR <= 220) return '效率偏低';
+                                                            else return '需优化';
+                                                        })()
+                                                    }}</div>
+                                                </div>
+                                                <div :style="(function() {
+                                                    const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) >= 3 && (h.totalDetailNum || 0) > 0);
+                                                    if (hotels.length < 3) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    // 计算评分-访客量弹性：使用对数回归近似
+                                                    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                    for (const h of hotels) {
+                                                        const logScore = Math.log(h.commentScore);
+                                                        const logVisitors = Math.log(Math.max(h.totalDetailNum, 1));
+                                                        sumX += logScore; sumY += logY;
+                                                        sumXY += logScore * logVisitors;
+                                                        sumX2 += logScore * logScore;
+                                                        n++;
+                                                    }
+                                                    const elasticity = n === 0 ? 0 : ((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                    const absE = Math.abs(elasticity);
+                                                    if (absE > 3) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                    else if (absE > 1.5) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (absE > 0.5) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) >= 3 && (h.totalDetailNum || 0) > 0);
+                                                            if (hotels.length < 3) return '-';
+                                                            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                            for (const h of hotels) {
+                                                                const logScore = Math.log(h.commentScore);
+                                                                const logVisitors = Math.log(Math.max(h.totalDetailNum, 1));
+                                                                sumX += logScore; sumY += logY;
+                                                                sumXY += logScore * logVisitors;
+                                                                sumX2 += logScore * logScore;
+                                                                n++;
+                                                            }
+                                                            const elasticity = ((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                            return toFixedSafe(elasticity, 2);
+                                                        })()
+                                                    }}</div>
+                                                    <div class="text-xs text-gray-500">携程评分-访客量弹性(E)</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) >= 3 && (h.totalDetailNum || 0) > 0);
+                                                            if (hotels.length < 3) return 'text-gray-500';
+                                                            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                            for (const h of hotels) {
+                                                                const logScore = Math.log(h.commentScore);
+                                                                const logVisitors = Math.log(Math.max(h.totalDetailNum, 1));
+                                                                sumX += logScore; sumY += logY;
+                                                                sumXY += logScore * logVisitors;
+                                                                sumX2 += logScore * logScore;
+                                                                n++;
+                                                            }
+                                                            const elasticity = Math.abs((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                            if (elasticity > 3) return 'text-green-600';
+                                                            else if (elasticity > 1.5) return 'text-emerald-600';
+                                                            else if (elasticity > 0.5) return 'text-orange-600';
+                                                            else return 'text-red-600';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.commentScore || 0) >= 3 && (h.totalDetailNum || 0) > 0);
+                                                            if (hotels.length < 3) return '数据不足';
+                                                            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                            for (const h of hotels) {
+                                                                const logScore = Math.log(h.commentScore);
+                                                                const logVisitors = Math.log(Math.max(h.totalDetailNum, 1));
+                                                                sumX += logScore; sumY += logY;
+                                                                sumXY += logScore * logVisitors;
+                                                                sumX2 += logScore * logScore;
+                                                                n++;
+                                                            }
+                                                            const elasticity = Math.abs((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                            if (elasticity > 3) return '高弹性';
+                                                            else if (elasticity > 1.5) return '中等弹性';
+                                                            else if (elasticity > 0.5) return '低弹性';
+                                                            else return '无弹性';
+                                                        })()
+                                                    }}</div>
+                                                </div>
+                                                <div :style="(function() {
+                                                    const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) >= 3 && (h.qunarDetailVisitors || 0) > 0);
+                                                    if (hotels.length < 3) return {backgroundColor: '#ffffff', border: '1px solid #e5e7eb'};
+                                                    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                    for (const h of hotels) {
+                                                        const logScore = Math.log(h.qunarCommentScore);
+                                                        const logVisitors = Math.log(Math.max(h.qunarDetailVisitors, 1));
+                                                        sumX += logScore; sumY += logY;
+                                                        sumXY += logScore * logVisitors;
+                                                        sumX2 += logScore * logScore;
+                                                        n++;
+                                                    }
+                                                    const elasticity = n === 0 ? 0 : ((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                    const absE = Math.abs(elasticity);
+                                                    if (absE > 3) return {backgroundColor: '#f0fdf4', border: '1px solid #86efac'};
+                                                    else if (absE > 1.5) return {backgroundColor: '#fefce8', border: '1px solid #fde047'};
+                                                    else if (absE > 0.5) return {backgroundColor: '#fff7ed', border: '1px solid #fdba74'};
+                                                    else return {backgroundColor: '#fef2f2', border: '1px solid #fca5a5'};
+                                                })()" class="rounded-lg p-3 text-center">
+                                                    <div class="text-2xl font-bold text-orange-600">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) >= 3 && (h.qunarDetailVisitors || 0) > 0);
+                                                            if (hotels.length < 3) return '-';
+                                                            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                            for (const h of hotels) {
+                                                                const logScore = Math.log(h.qunarCommentScore);
+                                                                const logVisitors = Math.log(Math.max(h.qunarDetailVisitors, 1));
+                                                                sumX += logScore; sumY += logY;
+                                                                sumXY += logScore * logVisitors;
+                                                                sumX2 += logScore * logScore;
+                                                                n++;
+                                                            }
+                                                            const elasticity = ((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                            return toFixedSafe(elasticity, 2);
+                                                        })()
+                                                    }}</div>
+                                                    <div class="text-xs text-gray-500">去哪去评分-访客量弹性(E)</div>
+                                                    <div class="text-sm font-bold {{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) >= 3 && (h.qunarDetailVisitors || 0) > 0);
+                                                            if (hotels.length < 3) return 'text-gray-500';
+                                                            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                            for (const h of hotels) {
+                                                                const logScore = Math.log(h.qunarCommentScore);
+                                                                const logVisitors = Math.log(Math.max(h.qunarDetailVisitors, 1));
+                                                                sumX += logScore; sumY += logY;
+                                                                sumXY += logScore * logVisitors;
+                                                                sumX2 += logScore * logScore;
+                                                                n++;
+                                                            }
+                                                            const elasticity = Math.abs((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                            if (elasticity > 3) return 'text-green-600';
+                                                            else if (elasticity > 1.5) return 'text-emerald-600';
+                                                            else if (elasticity > 0.5) return 'text-orange-600';
+                                                            else return 'text-red-600';
+                                                        })()
+                                                    }}">{{
+                                                        (() => {
+                                                            const hotels = ctripHotelsList.filter(h => (h.qunarCommentScore || 0) >= 3 && (h.qunarDetailVisitors || 0) > 0);
+                                                            if (hotels.length < 3) return '数据不足';
+                                                            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, n = 0;
+                                                            for (const h of hotels) {
+                                                                const logScore = Math.log(h.qunarCommentScore);
+                                                                const logVisitors = Math.log(Math.max(h.qunarDetailVisitors, 1));
+                                                                sumX += logScore; sumY += logY;
+                                                                sumXY += logScore * logVisitors;
+                                                                sumX2 += logScore * logScore;
+                                                                n++;
+                                                            }
+                                                            const elasticity = Math.abs((n * sumXY - sumX * sumY) / Math.max(n * sumX2 - sumX * sumX, 0.001));
+                                                            if (elasticity > 3) return '高弹性';
+                                                            else if (elasticity > 1.5) return '中等弹性';
+                                                            else if (elasticity > 0.5) return '低弹性';
+                                                            else return '无弹性';
+                                                        })()
+                                                    }}</div>
                                                 </div>
                                             </div>
 
                                             <!-- Tab切换 -->
                                             <div class="flex border-b mb-4">
-                                                <button @click="ctripTableTab = 'sales'" 
+                                                <button @click="ctripTableTab = 'sales'"
                                                     :class="['px-4 py-2 text-sm font-medium', ctripTableTab === 'sales' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500']">
                                                     销售与订单
                                                 </button>
-                                                <button @click="ctripTableTab = 'traffic'" 
+                                                <button @click="ctripTableTab = 'traffic'"
                                                     :class="['px-4 py-2 text-sm font-medium', ctripTableTab === 'traffic' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500']">
+                                                    流量与转化
+                                                </button>
                                                     流量与转化
                                                 </button>
                                                 <button @click="ctripTableTab = 'rank'" 
