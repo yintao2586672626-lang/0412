@@ -3384,14 +3384,14 @@
                                                         <th class="px-3 py-2 text-center border text-xs">排名</th>
                                                         <th class="px-3 py-2 text-left border text-xs">酒店名称</th>
                                                         <th class="px-3 py-2 text-center border text-xs">酒店ID</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-green-50">离店销售额</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-yellow-50">离店间夜量</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-blue-50">平均房价</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-purple-50">平均房价指数(ARI)</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">携程预定订单</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">全渠道AI预计总间夜数</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">携程点评分</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">去哪儿点评分</th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-green-50 cursor-pointer hover:bg-green-100" @click="sortCtripTable('amount')">离店销售额 <span v-if="ctripSortField === 'amount'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-yellow-50 cursor-pointer hover:bg-yellow-100" @click="sortCtripTable('quantity')">离店间夜量 <span v-if="ctripSortField === 'quantity'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-blue-50 cursor-pointer hover:bg-blue-100" @click="sortCtripTable('adr')">平均房价 <span v-if="ctripSortField === 'adr'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-purple-50 cursor-pointer hover:bg-purple-100" @click="sortCtripTable('ari')">平均房价指数(ARI) <span v-if="ctripSortField === 'ari'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('bookOrderNum')">携程预定订单 <span v-if="ctripSortField === 'bookOrderNum'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('totalOrderNum')">全渠道AI预计总间夜数 <span v-if="ctripSortField === 'totalOrderNum'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('commentScore')">携程点评分 <span v-if="ctripSortField === 'commentScore'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarCommentScore')">去哪儿点评分 <span v-if="ctripSortField === 'qunarCommentScore'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -3427,11 +3427,11 @@
                                                     <tr class="bg-gray-50">
                                                         <th class="px-3 py-2 text-center border text-xs">排名</th>
                                                         <th class="px-3 py-2 text-left border text-xs">酒店名称</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-purple-50">携程APP访客量</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-indigo-50">携程转化率</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">去哪儿访客</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">去哪儿转化率</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">预定转化率</th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-purple-50 cursor-pointer hover:bg-purple-100" @click="sortCtripTable('totalDetailNum')">携程APP访客量 <span v-if="ctripSortField === 'totalDetailNum'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-indigo-50 cursor-pointer hover:bg-indigo-100" @click="sortCtripTable('convertionRate')">携程转化率 <span v-if="ctripSortField === 'convertionRate'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarDetailVisitors')">去哪儿访客 <span v-if="ctripSortField === 'qunarDetailVisitors'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarDetailCR')">去哪儿转化率 <span v-if="ctripSortField === 'qunarDetailCR'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('bookRate')">预定转化率 <span v-if="ctripSortField === 'bookRate'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -3469,10 +3469,10 @@
                                                     <tr class="bg-gray-50">
                                                         <th class="px-3 py-2 text-center border text-xs">排名</th>
                                                         <th class="px-3 py-2 text-left border text-xs">酒店名称</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-green-50">销售额排名</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-yellow-50">间夜量排名</th>
-                                                        <th class="px-3 py-2 text-center border text-xs bg-blue-50">点评排名</th>
-                                                        <th class="px-3 py-2 text-center border text-xs">去哪转化排名</th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-green-50 cursor-pointer hover:bg-green-100" @click="sortCtripTable('amountRank')">销售额排名 <span v-if="ctripSortField === 'amountRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-yellow-50 cursor-pointer hover:bg-yellow-100" @click="sortCtripTable('quantityRank')">间夜量排名 <span v-if="ctripSortField === 'quantityRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs bg-blue-50 cursor-pointer hover:bg-blue-100" @click="sortCtripTable('commentScoreRank')">点评排名 <span v-if="ctripSortField === 'commentScoreRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                        <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarDetailCRRank')">去哪转化排名 <span v-if="ctripSortField === 'qunarDetailCRRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
                                                         <th class="px-3 py-2 text-center border text-xs">上榜状态</th>
                                                     </tr>
                                                 </thead>
@@ -4094,13 +4094,13 @@
                                                             <th class="px-3 py-2 text-center border text-xs">排名</th>
                                                             <th class="px-3 py-2 text-left border text-xs">酒店名称</th>
                                                             <th class="px-3 py-2 text-center border text-xs">酒店ID</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-green-50">离店销售额</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-yellow-50">离店间夜量</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-blue-50">平均房价</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">携程预定订单</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">全渠道AI预计总间夜数</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">携程点评分</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">去哪儿点评分</th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-green-50 cursor-pointer hover:bg-green-100" @click="sortCtripTable('amount')">离店销售额 <span v-if="ctripSortField === 'amount'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-yellow-50 cursor-pointer hover:bg-yellow-100" @click="sortCtripTable('quantity')">离店间夜量 <span v-if="ctripSortField === 'quantity'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-blue-50 cursor-pointer hover:bg-blue-100" @click="sortCtripTable('adr')">平均房价 <span v-if="ctripSortField === 'adr'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('bookOrderNum')">携程预定订单 <span v-if="ctripSortField === 'bookOrderNum'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('totalOrderNum')">全渠道AI预计总间夜数 <span v-if="ctripSortField === 'totalOrderNum'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('commentScore')">携程点评分 <span v-if="ctripSortField === 'commentScore'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarCommentScore')">去哪儿点评分 <span v-if="ctripSortField === 'qunarCommentScore'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -4137,11 +4137,11 @@
                                                         <tr class="bg-gray-50">
                                                             <th class="px-3 py-2 text-center border text-xs">排名</th>
                                                             <th class="px-3 py-2 text-left border text-xs">酒店名称</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-purple-50">携程APP访客量</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-indigo-50">携程转化率</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">去哪儿访客</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">去哪儿转化率</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">预定转化率</th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-purple-50 cursor-pointer hover:bg-purple-100" @click="sortCtripTable('totalDetailNum')">携程APP访客量 <span v-if="ctripSortField === 'totalDetailNum'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-indigo-50 cursor-pointer hover:bg-indigo-100" @click="sortCtripTable('convertionRate')">携程转化率 <span v-if="ctripSortField === 'convertionRate'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarDetailVisitors')">去哪儿访客 <span v-if="ctripSortField === 'qunarDetailVisitors'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarDetailCR')">去哪儿转化率 <span v-if="ctripSortField === 'qunarDetailCR'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('bookRate')">预定转化率 <span v-if="ctripSortField === 'bookRate'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -4179,10 +4179,10 @@
                                                         <tr class="bg-gray-50">
                                                             <th class="px-3 py-2 text-center border text-xs">排名</th>
                                                             <th class="px-3 py-2 text-left border text-xs">酒店名称</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-green-50">销售额排名</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-yellow-50">间夜量排名</th>
-                                                            <th class="px-3 py-2 text-center border text-xs bg-blue-50">点评排名</th>
-                                                            <th class="px-3 py-2 text-center border text-xs">去哪转化排名</th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-green-50 cursor-pointer hover:bg-green-100" @click="sortCtripTable('amountRank')">销售额排名 <span v-if="ctripSortField === 'amountRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-yellow-50 cursor-pointer hover:bg-yellow-100" @click="sortCtripTable('quantityRank')">间夜量排名 <span v-if="ctripSortField === 'quantityRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs bg-blue-50 cursor-pointer hover:bg-blue-100" @click="sortCtripTable('commentScoreRank')">点评排名 <span v-if="ctripSortField === 'commentScoreRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
+                                                            <th class="px-3 py-2 text-center border text-xs cursor-pointer hover:bg-gray-100" @click="sortCtripTable('qunarDetailCRRank')">去哪转化排名 <span v-if="ctripSortField === 'qunarDetailCRRank'">{{ ctripSortOrder === 'asc' ? '↑' : '↓' }}</span></th>
                                                             <th class="px-3 py-2 text-center border text-xs">上榜状态</th>
                                                         </tr>
                                                     </thead>
@@ -11017,6 +11017,70 @@
             const topTenHotels = ref([]); // 前十名酒店数据
             const ctripHotelsList = ref([]); // 携程完整酒店列表
             const ctripTableTab = ref('sales'); // 携程数据表格Tab: sales/traffic/rank
+            // 携程表格排序功能
+            const ctripSortField = ref(''); // 当前排序字段
+            const ctripSortOrder = ref('desc'); // 排序方式: asc/desc
+            const sortCtripTable = (field) => {
+                if (ctripSortField.value === field) {
+                    ctripSortOrder.value = ctripSortOrder.value === 'asc' ? 'desc' : 'asc';
+                } else {
+                    ctripSortField.value = field;
+                    ctripSortOrder.value = 'desc';
+                }
+                const sorted = [...ctripHotelsList.value].sort((a, b) => {
+                    let aVal, bVal;
+                    if (field === 'amount') {
+                        aVal = a.amount || 0;
+                        bVal = b.amount || 0;
+                    } else if (field === 'quantity') {
+                        aVal = a.quantity || 0;
+                        bVal = b.quantity || 0;
+                    } else if (field === 'adr') {
+                        aVal = (a.amount || 0) / Math.max(1, a.quantity || 0);
+                        bVal = (b.amount || 0) / Math.max(1, b.quantity || 0);
+                    } else if (field === 'ari') {
+                        const circleAvg = ctripHotelsList.value.filter(h => (h.quantity || 0) > 0).reduce((s, h) => s + ((h.amount || 0) / (h.quantity || 1)), 0) / Math.max(1, ctripHotelsList.value.filter(h => (h.quantity || 0) > 0).length);
+                        aVal = (a.quantity || 0) > 0 ? (a.amount || 0) / a.quantity / circleAvg * 100 : 0;
+                        bVal = (b.quantity || 0) > 0 ? (b.amount || 0) / b.quantity / circleAvg * 100 : 0;
+                    } else if (field === 'bookOrderNum') {
+                        aVal = a.bookOrderNum || 0;
+                        bVal = b.bookOrderNum || 0;
+                    } else if (field === 'totalOrderNum') {
+                        aVal = a.totalOrderNum || 0;
+                        bVal = b.totalOrderNum || 0;
+                    } else if (field === 'commentScore') {
+                        aVal = a.commentScore || 0;
+                        bVal = b.commentScore || 0;
+                    } else if (field === 'qunarCommentScore') {
+                        aVal = a.qunarCommentScore || 0;
+                        bVal = b.qunarCommentScore || 0;
+                    } else if (field === 'totalDetailNum') {
+                        aVal = a.totalDetailNum || 0;
+                        bVal = b.totalDetailNum || 0;
+                    } else if (field === 'convertionRate') {
+                        aVal = a.convertionRate || 0;
+                        bVal = b.convertionRate || 0;
+                    } else if (field === 'qunarDetailVisitors') {
+                        aVal = a.qunarDetailVisitors || 0;
+                        bVal = b.qunarDetailVisitors || 0;
+                    } else if (field === 'qunarDetailCR') {
+                        aVal = a.qunarDetailCR || 0;
+                        bVal = b.qunarDetailCR || 0;
+                    } else if (field === 'bookRate') {
+                        aVal = (a.quantity || 0) > 0 ? (a.bookOrderNum || 0) / a.quantity * 100 : 0;
+                        bVal = (b.quantity || 0) > 0 ? (b.bookOrderNum || 0) / b.quantity * 100 : 0;
+                    } else if (field === 'amountRank' || field === 'quantityRank' || field === 'commentScoreRank' || field === 'qunarDetailCRRank') {
+                        // 排名字段：未上榜(null)排到最后，用99999代替
+                        aVal = a[field] || 99999;
+                        bVal = b[field] || 99999;
+                    } else {
+                        aVal = a[field] || 0;
+                        bVal = b[field] || 0;
+                    }
+                    return ctripSortOrder.value === 'asc' ? aVal - bVal : bVal - aVal;
+                });
+                ctripHotelsList.value = sorted;
+            };
             const showRawData = ref(false); // 是否展开原始数据
             const ctripForm = ref({
                 url: 'https://ebooking.ctrip.com/datacenter/api/dataCenter/report/getDayReportCompeteHotelReport',
@@ -17261,7 +17325,7 @@ ${d.report_date}
                 openReportConfigModal, saveReportConfig, deleteReportConfig,
                 openSystemConfigModal, saveSystemConfig, getMenuItemName,
                 // 线上数据获取
-                onlineDataTab, downloadCenterTab, fetchingData, onlineDataResult, topTenHotels, ctripHotelsList, ctripTableTab, showRawData, ctripForm, ctripTrafficForm, meituanForm, meituanTrafficForm, meituanCommentForm, fetchingCommentData, meituanCommentSuccess, meituanCommentResult, showMeituanCommentHelp, customForm, newCookies, cookiesList, bookmarkletCode,
+                onlineDataTab, downloadCenterTab, fetchingData, onlineDataResult, topTenHotels, ctripHotelsList, ctripTableTab, ctripSortField, ctripSortOrder, sortCtripTable, showRawData, ctripForm, ctripTrafficForm, meituanForm, meituanTrafficForm, meituanCommentForm, fetchingCommentData, meituanCommentSuccess, meituanCommentResult, showMeituanCommentHelp, customForm, newCookies, cookiesList, bookmarkletCode,
                 quickCookiesName, quickCookiesValue, openTargetSite, saveQuickCookies,
                 // 线上数据记录
                 onlineDataFilter, onlineDataList, onlineDataPagination, onlineDataPage, onlineDataHotelList, onlineDataSummary,
